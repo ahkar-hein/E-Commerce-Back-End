@@ -3,6 +3,7 @@ const { Category, Product } = require('../../models');
 
 // The `/api/categories` endpoint
 
+// get routes for find all categories that include associated product by using findall methods.
 router.get('/', async (req, res) => {
   try {
     const categoryData = await Category.findAll({
@@ -14,6 +15,7 @@ router.get('/', async (req, res) => {
   }  
 });
 
+// get routes for find single categories with id that include associated product by using findbyPK methods.
 router.get('/:id', async (req, res) => {
   try {
     const categoryData = await Category.findByPk(req.params.id, {
@@ -25,6 +27,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
+// post route for create new category by using create method.
 router.post('/', async (req, res) => {
   try {
     const categoryData = await Category.create(req.body)
@@ -33,13 +36,13 @@ router.post('/', async (req, res) => {
     res.status(500).json(err);
   }
 });
-
+// put route for update category by id using update method.
 router.put('/:id', async (req, res) => {
   try {
     const categoryData = await Category.update(req.body, {
       where: { id: req.params.id },
     });
-
+// if category data doesn't find with id parms, display message.
     if (!categoryData[0]) {
       res.status(404).json({ message: 'Category not found' });
       return;
@@ -50,7 +53,7 @@ router.put('/:id', async (req, res) => {
     res.status(500).json(err);
   }
 });
-
+// delete route by id using destroy mehtods
 router.delete('/:id', async (req, res) => {
   try {
     const categoryData = await Category.destroy({
